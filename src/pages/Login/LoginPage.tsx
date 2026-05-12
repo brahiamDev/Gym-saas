@@ -1,24 +1,27 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 import { AuthLayout } from '@/layouts/AuthLayout';
 import { ROUTES } from '@/routes/route-definitions';
+import { useAuth } from '@/hooks';
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const { signIn, isLoading, error, clearError } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      // eslint-disable-next-line no-console
-      console.log('Login:', { email, password });
-      setIsLoading(false);
-    }, 1000);
+    clearError();
+
+        const result = await signIn(email, password);
+
+        if (result.success) {
+          // Redirigir al dashboard después del login
+          navigate('/dashboard');
+        }
   };
 
   return (
@@ -44,8 +47,23 @@ export function LoginPage() {
         </h1>
         <p className="mt-1 text-muted">Bienvenido de vuelta</p>
 
+        {/* Error message */}
+        <AnimatePresence>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mt-4 flex items-start gap-2 rounded-lg bg-danger/10 border border-danger/30 p-3 text-sm text-danger"
+            >
+              <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>{error}</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Form */}
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <div className="space-y-1.5">
             <label
               htmlFor="login-email"
@@ -60,7 +78,8 @@ export function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-lg border border-[#334155] bg-input px-4 py-3 text-text placeholder-[#64748B] transition-all focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              disabled={isLoading}
+              className="w-full rounded-lg border border-[#334155] bg-input px-4 py-3 text-text placeholder-[#64748B] transition-all focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50"
             />
           </div>
 
@@ -78,7 +97,8 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full rounded-lg border border-[#334155] bg-input px-4 py-3 text-text placeholder-[#64748B] transition-all focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              disabled={isLoading}
+              className="w-full rounded-lg border border-[#334155] bg-input px-4 py-3 text-text placeholder-[#64748B] transition-all focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50"
             />
           </div>
 
