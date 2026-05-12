@@ -1,0 +1,1 @@
+export type Role = 'super_admin' | 'gym_owner' | 'admin' | 'recepcionista' | 'trainer' | 'member' | 'guest';

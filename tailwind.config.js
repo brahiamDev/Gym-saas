@@ -1,0 +1,46 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './src/**/*.{ts,tsx}',
+    './src/app/**/*.{ts,tsx}',
+    './src/routes/**/*.{ts,tsx}',
+    './src/layouts/**/*.{ts,tsx}',
+    './src/pages/**/*.{ts,tsx}',
+    './src/components/**/*.{ts,tsx}',
+    './src/features/**/*.{ts,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: '#0F172A',
+        surface: '#111827',
+        primary: '#22C55E',
+        secondary: '#06B6D4',
+        accent: '#A855F7',
+        text: '#F8FAFC',
+        muted: '#94A3B8',
+        danger: '#EF4444',
+        border: '#1E293B',
+        input: '#1E293B',
+        ring: '#22C55E',
+        foreground: '#F8FAFC',
+        card: '#111827',
+        'card-foreground': '#F8FAFC',
+        popover: '#111827',
+        'popover-foreground': '#F8FAFC',
+        'primary-foreground': '#0F172A',
+        'secondary-foreground': '#0F172A',
+        'accent-foreground': '#F8FAFC',
+        destructive: '#EF4444',
+        'destructive-foreground': '#F8FAFC',
+        'muted-foreground': '#94A3B8',
+      },
+      fontFamily: {
+        display: ['Bebas Neue', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+};

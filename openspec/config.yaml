@@ -1,0 +1,33 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Tech stack: React + Vite + TypeScript, TailwindCSS + shadcn/ui, Supabase (PostgreSQL), Zustand, React Router, Framer Motion, TanStack Query, React Hook Form + Zod
+  Architecture: New SaaS platform for gyms — greenfield project
+  Testing: Vitest available (tdd mode enabled by default for React)
+  Style: Component-driven with shadcn/ui patterns
+
+strict_tdd: true
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns
+    tdd: true
+    test_command: "vitest"
+  verify:
+    test_command: "vitest"
+    build_command: "vite build"
+    coverage_threshold: 70
+  archive:
+    - Warn before merging destructive deltas
