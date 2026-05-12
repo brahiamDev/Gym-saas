@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Dumbbell, Users, Activity, Trophy } from 'lucide-react';
 import { ROUTES } from '@/routes/route-definitions';
+import { useAuthStore } from '@/store';
 
 const features = [
   {
@@ -40,6 +42,14 @@ const itemVariants = {
 
 export function HomePage() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+
+  // Redirigir al dashboard si ya está autenticado
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background font-body text-text">
